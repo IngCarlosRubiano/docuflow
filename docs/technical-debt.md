@@ -40,3 +40,19 @@ Deuda técnica registrada con motivo, impacto y condición de resolución.
 - **Impacto:** Sin validación automática de que el contexto Spring arranca.
   Se valida manualmente ejecutando `docker compose up` + `java -jar`.
 - **Condición de resolución:** Fase 2, junto con el modelo de datos.
+
+---
+
+## TD-004 — Spring Security auto-configurado con usuario en memoria
+
+- **Tipo:** intencional
+- **Fecha:** 2026-10-29
+- **Descripción:** `spring-boot-starter-security` está en el classpath pero no existe
+  `SecurityConfig` aún. Spring Security genera un usuario `user` con contraseña
+  aleatoria en cada arranque, y emite un warning en los logs.
+- **Impacto:** Ninguno funcional para el bootstrap. Los endpoints de actuator y
+  los que se creen hasta la Fase 3 estarán protegidos por HTTP Basic por defecto
+  (o permitidos según la configuración auto-generada).
+- **Condición de resolución:** Fase 3, al crear `SecurityConfig` con reglas
+  explícitas para `/auth/**`, `/actuator/health` y el resto de endpoints.
+- **Issue relacionado:** #3 (Fase 3)
