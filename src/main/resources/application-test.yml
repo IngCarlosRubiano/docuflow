@@ -1,0 +1,12 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:tc:postgresql:18.6:///docuflow
+    username: docuflow
+    password: docuflow
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  flyway:
+    enabled: true
+    clean-disabled: false
