@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: demo
+logging:
+  level:
+    com.ingcarlosrubiano.docuflow: INFO

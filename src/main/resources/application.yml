@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: docuflow
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/docuflow}
+    username: ${DB_USERNAME:docuflow}
+    password: ${DB_PASSWORD:docuflow}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
