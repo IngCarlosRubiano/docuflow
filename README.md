@@ -18,6 +18,16 @@
 El proyecto se construye como parte del **ecosistema de portafolio de Carlos Rubiano**, aplicando desde el primer commit prácticas profesionales de ingeniería de software: SOLID, Clean Code, patrones de diseño justificados, pruebas automatizadas en múltiples niveles, seguridad aplicada, CI/CD y despliegue reproducible.
 
 ---
+## 📑 Índice
+- [Objetivos](#-objetivos)
+- [Estado del proyecto](#-estado-del-proyecto)
+- [Funcionalidades](#-funcionalidades)
+- [Stack](#️-stack)
+- [Arquitectura](#️-arquitectura)
+- [Primeros pasos](#-primeros-pasos)
+- [Documentación](#-documentación)
+- [Roadmap](#️-roadmap)
+---
 
 ## 🎯 Objetivos
 
@@ -130,24 +140,26 @@ _(Ninguna todavía — el proyecto está en Fase 1: fundamentos, configuración 
 ## 🏗️ Arquitectura
 
 **Monolito modular con arquitectura por capas**, organizada por funcionalidad. Evoluciona a hexagonal cuando el proyecto lo justifique (mínimo dos implementaciones reales por puerto).
-┌─────────────────────────────────────────────────┐
-│ API / Presentación │
-│ Controllers · DTOs · Validation · Mappers │
-├─────────────────────────────────────────────────┤
-│ Aplicación │
-│ Casos de uso · Servicios · Puertos · Tx │
-├─────────────────────────────────────────────────┤
-│ Dominio │
-│ Entidades · Value Objects · Reglas · Errores │
-├─────────────────────────────────────────────────┤
-│ Infraestructura │
-│ JPA · Storage · OCR · Jobs · Config │
-└─────────────────────────────────────────────────┘
-▲
-│
-Seguridad · Observabilidad · OpenAPI
 
-text
+```text
+┌─────────────────────────────────────────────────┐
+│ API / Presentación                              │
+│ Controllers · DTOs · Validation · Mappers       │
+├─────────────────────────────────────────────────┤
+│ Aplicación                                      │
+│ Casos de uso · Servicios · Puertos · Tx         │
+├─────────────────────────────────────────────────┤
+│ Dominio                                         │
+│ Entidades · Value Objects · Reglas · Errores    │
+├─────────────────────────────────────────────────┤
+│ Infraestructura                                 │
+│ JPA · Storage · OCR · Jobs · Config             │
+└─────────────────────────────────────────────────┘
+                        ▲
+                        │
+      Seguridad · Observabilidad · OpenAPI
+
+```
 
 **Regla de dependencia:** `api → application → domain ← infrastructure`. El dominio no importa Spring, JPA ni Tesseract.
 
@@ -160,39 +172,41 @@ text
 ---
 
 ## 📂 Estructura del repositorio
+
+```text
 docuflow/
 ├── .github/
-│ ├── workflows/ # CI, quality gates, deploy
-│ ├── ISSUE_TEMPLATE/ # feature, bug, chore, adr
-│ ├── PULL_REQUEST_TEMPLATE.md
-│ └── dependabot.yml
+│   ├── workflows/             # CI, quality gates, deploy
+│   ├── ISSUE_TEMPLATE/        # feature, bug, chore, adr
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── dependabot.yml
 ├── docs/
-│ ├── adr/ # Decisiones arquitectónicas
-│ ├── architecture/ # Diagramas C4 y overview
-│ ├── api/ # OpenAPI + colección Bruno
-│ ├── testing/ # Estrategia de pruebas
-│ ├── solid/ # Evidencia SOLID aplicada
-│ ├── security/ # Modelo de seguridad
-│ ├── deployment/ # Entornos y despliegue
-│ ├── operations/ # Backup, restore, runbook
-│ ├── runbook/ # Incidentes y soluciones
-│ ├── retrospectives/ # Retrospectivas por fase
-│ ├── learning-log.md
-│ ├── incident-log.md
-│ ├── known-limitations.md
-│ ├── technical-debt.md
-│ └── glossary.md
+│   ├── adr/                   # Decisiones arquitectónicas
+│   ├── architecture/          # Diagramas C4 y overview
+│   ├── api/                   # OpenAPI + colección Bruno
+│   ├── testing/               # Estrategia de pruebas
+│   ├── solid/                 # Evidencia SOLID aplicada
+│   ├── security/              # Modelo de seguridad
+│   ├── deployment/            # Entornos y despliegue
+│   ├── operations/            # Backup, restore, runbook
+│   ├── runbook/               # Incidentes y soluciones
+│   ├── retrospectives/        # Retrospectivas por fase
+│   ├── learning-log.md
+│   ├── incident-log.md
+│   ├── known-limitations.md
+│   ├── technical-debt.md
+│   └── glossary.md
 ├── src/
-│ ├── main/
-│ │ ├── java/com/ingcarlosrubiano/docuflow/
-│ │ └── resources/ # application*.yml · db/migration
-│ └── test/
-│ ├── java/
-│ └── resources/ # documentos sintéticos
-├── bruno/ # Colección de API versionada
-├── docker/ # Dockerfile y configuraciones
-├── k6/ # Scripts de prueba de carga
-├── scripts/ # Utilidades locales
+│   ├── main/
+│   │   ├── java/com/ingcarlosrubiano/docuflow/
+│   │   └── resources/         # application*.yml · db/migration
+│   └── test/
+│       ├── java/
+│       └── resources/         # documentos sintéticos
+├── bruno/                     # Colección de API versionada
+├── docker/                    # Dockerfile y configuraciones
+├── k6/                        # Scripts de prueba de carga
+├── scripts/                   # Utilidades locales
 ├── .editorconfig
 ├── .env.example
 ├── .gitignore
@@ -203,7 +217,7 @@ docuflow/
 ├── SECURITY.md
 └── pom.xml
 
-text
+```
 
 ---
 
@@ -229,48 +243,58 @@ cd docuflow
 cp .env.example .env
 # Edita .env si lo necesitas (por defecto funciona en local)
 ./mvnw verify
-Configuración
-El proyecto usa variables de entorno documentadas en .env.example. Copia el archivo y ajusta los valores según tu entorno:
+```
+### Configuración
 
-bash
+El proyecto usa variables de entorno documentadas en `.env.example`. Copia el archivo y ajusta los valores según tu entorno:
+
+```bash
 cp .env.example .env
-Variables principales:
+```
+⚠️ Nunca commitees el archivo `.env`. El `.gitignore` lo excluye.
 
-Variable	Descripción	Valor por defecto
-DB_HOST	Host de PostgreSQL	localhost
-DB_PORT	Puerto de PostgreSQL	5433
-DB_NAME	Nombre de la base de datos	docuflow
-DB_USERNAME	Usuario de la base de datos	docuflow
-DB_PASSWORD	Contraseña de la base de datos	(cambiar)
-JWT_SIGNING_KEY	Clave de firma JWT (256+ bits)	(cambiar)
-STORAGE_TYPE	Tipo de almacenamiento	local
-MAX_FILE_SIZE	Tamaño máximo de archivo	20MB
-SPRING_PROFILES_ACTIVE	Perfil de Spring	local
-⚠️ Nunca commitees el archivo .env. El .gitignore lo excluye.
+**Variables principales:**
 
-Ejecución
+| Variable | Descripción | Valor por defecto |
+|----------|-------------|-------------------|
+| `DB_HOST` | Host de PostgreSQL | `localhost` |
+| `DB_PORT` | Puerto de PostgreSQL | `5433` |
+| `DB_NAME` | Nombre de la base de datos | `docuflow` |
+| `DB_USERNAME` | Usuario de la base de datos | `docuflow` |
+| `DB_PASSWORD` | Contraseña de la base de datos | *(cambiar)* |
+| `JWT_SIGNING_KEY` | Clave de firma JWT (256+ bits) | *(cambiar)* |
+| `STORAGE_TYPE` | Tipo de almacenamiento | `local` |
+| `MAX_FILE_SIZE` | Tamaño máximo de archivo | `20MB` |
+| `SPRING_PROFILES_ACTIVE` | Perfil de Spring | `local` |
+
+### Ejecución
+
 Con Docker Compose (recomendado):
 
-bash
+```bash
 docker compose up -d
-Esto levanta PostgreSQL en localhost:5433 y la aplicación en localhost:8080.
+```
+Esto levanta PostgreSQL en `localhost:5433` y la aplicación en `localhost:8080`.
 
 Desarrollo local (sin contenedor de la app):
 
-bash
+```bash
 # Solo PostgreSQL
 docker compose up -d postgres
 
 # Aplicación en primer plano
 ./mvnw spring-boot:run
-La API queda disponible en http://localhost:8080.
+```
+La API queda disponible en `http://localhost:8080`.
 
 Health check:
 
-bash
+```bash
 curl http://localhost:8080/actuator/health
-🧪 Pruebas
-bash
+```
+### 🧪 Pruebas
+
+```bash
 # Todas las pruebas
 ./mvnw test
 
@@ -282,72 +306,71 @@ bash
 
 # Cobertura con JaCoCo
 ./mvnw jacoco:report
-# Reporte en: target/site/jacoco/index.html
-La estrategia completa de pruebas está documentada en docs/testing/.
+```
+*Reporte en: `target/site/jacoco/index.html`*
+La estrategia completa de pruebas está documentada en `docs/testing/`.
 
-📚 Documentación
-Documento	Descripción
-Arquitectura	Diagramas C4, overview y decisiones de diseño
-ADRs	Registro de decisiones arquitectónicas
-Testing	Estrategia de pruebas por nivel
-SOLID	Evidencia de aplicación de principios SOLID
-Seguridad	Modelo de seguridad y controles
-Despliegue	Entornos, despliegue y rollback
-Operaciones	Backup, restore y runbook
-Glosario	Términos técnicos del proyecto
-CHANGELOG	Historial de cambios
-OpenAPI / Swagger UI (disponible al correr la aplicación):
+### 📚 Documentación
 
-UI interactiva: http://localhost:8080/swagger-ui/index.html
+| Documento | Descripción |
+|-----------|-------------|
+| **Arquitectura** | Diagramas C4, overview y decisiones de diseño |
+| **ADRs** | Registro de decisiones arquitectónicas |
+| **Testing** | Estrategia de pruebas por nivel |
+| **SOLID** | Evidencia de aplicación de principios SOLID |
+| **Seguridad** | Modelo de seguridad y controles |
+| **Despliegue** | Entornos, despliegue y rollback |
+| **Operaciones** | Backup, restore y runbook |
+| **Glosario** | Términos técnicos del proyecto |
+| **CHANGELOG** | Historial de cambios |
 
-Especificación JSON: http://localhost:8080/v3/api-docs
+**OpenAPI / Swagger UI** (disponible al correr la aplicación):
+* **UI interactiva:** `http://localhost:8080/swagger-ui/index.html`
+* **Especificación JSON:** `http://localhost:8080/v3/api-docs`
 
-🗺️ Roadmap
-Release	Fecha objetivo	Contenido
-v0.1.0	1 nov 2026	Esqueleto, migraciones, CI, ADR-001/015
-v0.2.0	8 nov 2026	Autenticación completa
-v0.3.0	22 nov 2026	Búsqueda, contrato OpenAPI completo
-v0.4.0	29 nov 2026	MVP funcional completo
-v0.5.0	13 dic 2026	OCR, clasificación y búsqueda de contenido
-v0.6.0	20 dic 2026	Versionamiento y auditoría
-v0.7.0	27 dic 2026	Asincronía, outbox y almacenamiento externo
-v0.9.0-rc.1	1 ene 2027	Candidata a release: calidad y observabilidad
-v1.0.0	8 ene 2027	Release final con demo desplegada
+## 🗺️ Roadmap
+
+| Release | Fecha objetivo | Contenido |
+|---------|----------------|-----------|
+| `v0.1.0` | 1 nov 2026 | Esqueleto, migraciones, CI, ADR-001/015 |
+| `v0.2.0` | 8 nov 2026 | Autenticación completa |
+| `v0.3.0` | 22 nov 2026 | Búsqueda, contrato OpenAPI completo |
+| `v0.4.0` | 29 nov 2026 | MVP funcional completo |
+| `v0.5.0` | 13 dic 2026 | OCR, clasificación y búsqueda de contenido |
+| `v0.6.0` | 20 dic 2026 | Versionamiento y auditoría |
+| `v0.7.0` | 27 dic 2026 | Asincronía, outbox y almacenamiento externo |
+| `v0.9.0-rc.1` | 1 ene 2027 | Candidata a release: calidad y observabilidad |
+| `v1.0.0` | 8 ene 2027 | Release final con demo desplegada |
+
 Los milestones están disponibles en la sección Releases y Milestones.
 
-🤝 Contribuciones
-Este es un proyecto personal de portafolio, pero se mantiene con estándares profesionales. Si quieres contribuir, por favor lee CONTRIBUTING.md antes de enviar un Pull Request.
+## 🤝 Contribuciones
+Este es un proyecto personal de portafolio, pero se mantiene con estándares profesionales. Si quieres contribuir, por favor lee `CONTRIBUTING.md` antes de enviar un Pull Request.
 
 Toda contribución debe:
+* Respetar Conventional Commits.
+* Incluir pruebas para el comportamiento nuevo.
+* Pasar el CI sin errores.
+* Actualizar la documentación si cambia una decisión o contrato.
 
-Respetar Conventional Commits.
+## 🔒 Seguridad
+Para reportar una vulnerabilidad, no abras un issue público. Sigue el procedimiento en `SECURITY.md`.
 
-Incluir pruebas para el comportamiento nuevo.
+El modelo de seguridad (autenticación, autorización, validación de archivos, controles) está documentado en `docs/security/`.
 
-Pasar el CI sin errores.
+## 📄 Licencia
+Este proyecto está bajo la licencia MIT. Ver `LICENSE` para más detalles.
 
-Actualizar la documentación si cambia una decisión o contrato.
+## 👤 Autor
+**Carlos Rubiano** — Ingeniero de Software · Backend · Java · Spring Boot · TypeScript · Python
 
-🔒 Seguridad
-Para reportar una vulnerabilidad, no abras un issue público. Sigue el procedimiento en SECURITY.md.
+* 💼 [LinkedIn](https://www.linkedin.com/in/carlos-rubiano-engineer/)
+* 🐙 [GitHub](https://github.com/IngCarlosRubiano)
+* 🌐 [Portafolio](https://ingcarlosrubiano.github.io/)
 
-El modelo de seguridad (autenticación, autorización, validación de archivos, controles) está documentado en docs/security/.
+*Formación: Ingeniería Telemática — visión integral que combina software, redes y sistemas.*
 
-📄 Licencia
-Este proyecto está bajo la licencia MIT. Ver LICENSE para más detalles.
-
-👤 Autor
-Carlos Rubiano — Ingeniero de Software · Backend · Java · Spring Boot · TypeScript · Python
-
-💼 LinkedIn
-
-🐙 GitHub
-
-🌐 Portafolio
-
-Formación: Ingeniería Telemática — visión integral que combina software, redes y sistemas.
-
-🙏 Agradecimientos
+## 🙏 Agradecimientos
 Este proyecto forma parte de un ecosistema de aprendizaje progresivo orientado a construir un perfil backend profesional. La documentación pública, las comunidades de Spring y PostgreSQL, y la disciplina de la ingeniería de software aplicada han sido la base metodológica de cada decisión.
 
-"Aprender ingeniería de software construyendo software."
+> *"Aprender ingeniería de software construyendo software."*
